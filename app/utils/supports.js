@@ -3,12 +3,12 @@ export const fetchQuery = `*[_type == 'Products'] | order(_createdAt desc){
     title,
     productType,
     mainImage {
-      asset => {
+      asset -> {
         url
       }
     },
     bgImage {
-      asset => {
+      asset -> {
         url
       }
     },
@@ -19,7 +19,7 @@ export const fetchQuery = `*[_type == 'Products'] | order(_createdAt desc){
       _id,
       title,
       mainImage {
-      asset => {
+      asset -> {
         url
       }
     }

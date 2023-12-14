@@ -8,6 +8,7 @@ import { fetchFeeds } from '../sanity'
 import "react-native-url-polyfill/auto"
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_FEEDS } from '../context/actions/feedsActions'
+import { Feeds } from '../components'
 
 const HomeScreen = () => {
 
@@ -34,7 +35,7 @@ const HomeScreen = () => {
         }, 200);
       });
 
-      console.log("Feeds from Store: ", feeds.feeds)
+      // console.log("Feeds from Store: ", feeds.feeds)
     } catch (error) {
       console.log(error)
       setisLoading(false)
@@ -44,7 +45,7 @@ const HomeScreen = () => {
   
 
   return (
-    <SafeAreaView style={tw`flex-1 items-center justify-start py-10 bg-[#EBEAEF]`}>
+    <SafeAreaView style={tw`flex-1 items-center justify-start py-10 bg-[#EBEAEF] `}>
       <View style={tw`flex-row w-full items-center justify-between px-4 py-2`}>
         <MaterialIcons name="chevron-left" size={32} color="#555" />
 
@@ -73,7 +74,10 @@ const HomeScreen = () => {
       {/* Scrollable container start */}
 
       <ScrollView style={tw`flex-1 w-full`}>
-        {isLoading ? <View style={tw`flex-1 h-80 items-center justify-center`}><ActivityIndicator size={'large'} color={"teal"}/></View> : <Text>Loaded</Text>}
+        {isLoading ? <View style={tw`flex-1 h-80 items-center justify-center`}><ActivityIndicator size={'large'} color={"teal"}/></View> : 
+          (
+            <Feeds feeds={feeds?.feeds}/>
+        )}
 
 
       </ScrollView>
