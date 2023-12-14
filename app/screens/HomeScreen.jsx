@@ -18,9 +18,14 @@ const HomeScreen = () => {
   const dispatch = useDispatch()
 
   const feeds = useSelector(state => state.feeds)
+  const [filtered, setFiltered]  = useState(null)
 
   const handleSearchTerm = (text) => {
     setsearchTerm(text)
+
+    setFiltered(
+      feeds?.feeds.filter(item => item.title.includes(text)
+    ))
   }
 
   useEffect(() => {
@@ -60,7 +65,7 @@ const HomeScreen = () => {
             placeholderTextColor="#555"
             placeholder='Search Here...'
             value={searchTerm}
-            onChange={handleSearchTerm}/>
+            onChangeText={handleSearchTerm}/>
         </View>
 
         <TouchableOpacity style={tw`w-12 h-12 rounded-xl flex items-center justify-center bg-white`}>
@@ -76,7 +81,9 @@ const HomeScreen = () => {
       <ScrollView style={tw`flex-1 w-full`}>
         {isLoading ? <View style={tw`flex-1 h-80 items-center justify-center`}><ActivityIndicator size={'large'} color={"teal"}/></View> : 
           (
-            <Feeds feeds={feeds?.feeds}/>
+            <Feeds
+              feeds={filtered || filtered?.length > 0 ? filtered : feeds?.feeds} 
+            />
         )}
 
 
