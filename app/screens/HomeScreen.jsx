@@ -6,11 +6,17 @@ import { Screen3 } from '../assets'
 import { fetchFeeds } from '../sanity'
 
 import "react-native-url-polyfill/auto"
+import { useDispatch, useSelector } from 'react-redux'
+import { SET_FEEDS } from '../context/actions/feedsActions'
 
 const HomeScreen = () => {
 
   const [searchTerm, setsearchTerm] = useState("")
   const [isLoading, setisLoading] = useState(false)
+
+  const dispatch = useDispatch()
+
+  const feeds = useSelector(state => state.feeds)
 
   const handleSearchTerm = (text) => {
     setsearchTerm(text)
@@ -21,11 +27,14 @@ const HomeScreen = () => {
     
     try{
       fetchFeeds().then(res => {
-        console.log(res)
+        // console.log(res)
+        dispatch(SET_FEEDS(res))
         setInterval(() => {
           setisLoading(false)
         }, 200);
-      })
+      });
+
+      console.log("Feeds from Store: ", feeds.feeds)
     } catch (error) {
       console.log(error)
       setisLoading(false)
