@@ -1,15 +1,17 @@
 import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import tw from 'twrnc'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { AntDesign, Entypo, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { addtocart } from '../context/actions/cartActions'
 
 const ProductScreen = ({route}) => {
 
     const { _id } = route.params
 
+    const cartItems = useSelector(state => state.cartItems)
     const feeds = useSelector(state => state.feeds)
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -17,6 +19,7 @@ const ProductScreen = ({route}) => {
     const [qty, setQty] = useState(1)
 
     const navigation = useNavigation()
+    const dispatch = useDispatch()
 
     const screenHeight = Math.round(Dimensions.get('window').height)
 
@@ -33,6 +36,10 @@ const ProductScreen = ({route}) => {
     const handleQty = (action) => {
         const newQty = qty + action
         setQty(newQty >= 1 ? newQty : 1)
+    }
+
+    const handlePressCart = () => {
+        dispatch(addtocart({data: data, qty: qty}))
     }
 
 
@@ -59,7 +66,7 @@ const ProductScreen = ({route}) => {
 
                     {/* Image Section */}
 
-                    <View style={[tw`w-full flex items-center justify-center relative le`, {height : screenHeight/2} ] } >
+                    <View style={[tw`w-full flex items-center justify-center relative`, {height : screenHeight/2} ] } >
                         <Image source={{uri : data?.bgImage?.asset?.url}} resizeMode='cover' style={tw`w-full h-full opacity-30`} />
                         <View style={tw`w-full h-full absolute top-0 left-0 flex items-center justify-center`}>
                             <Image source={{uri : data?.mainImage?.asset?.url}} resizeMode='contain' style={tw`w-80 h-80`} />
@@ -113,9 +120,19 @@ const ProductScreen = ({route}) => {
 
                         </View>
 
-                        <TouchableOpacity style={tw`bg-black px-4 py-2 rounded-xl`}>
-                            <Text style={tw`text-base font-semibold text-gray-50`}>Cart</Text>
-                        </TouchableOpacity>
+                        {cartItems?.cart?.filter((item) => item?.data?._id === data?._id).length > 0 ? (
+                            <TouchableOpacity style={tw`bg-black px-4 py-2 rounded-xl`}>
+                                <Text style={tw`text-base font-semibold text-gray-50`}>
+                                    Added
+                                </Text>
+                            </TouchableOpacity>) : (
+                            <TouchableOpacity onPress={handlePressCart} style={tw`bg-black px-4 py-2 rounded-xl`}>
+                                <Text style={tw`text-base font-semibold text-gray-50`}>
+                                    Cart
+                                </Text>
+                            </TouchableOpacity>)
+                        }
+                        
                     </View>
 
                 </View>
