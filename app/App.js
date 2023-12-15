@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
+import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import {HomeScreen, OnBoardingScreen, ProductScreen} from './screens'
 
@@ -10,9 +10,26 @@ import { BottomTab } from './components'
 
 const Stack = createNativeStackNavigator()
 
+const MyComponent = ({setActiveScreen}) => {
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('state', () => {
+      const currentScreen = navigation.getCurrentRoute().name
+      setActiveScreen(currentScreen)
+    });
+
+    return unsubscribe
+  }, [navigation])
+}
+
 const App = () => {
+
+  const [activeScreen, setActiveScreen] = useState("")
+
   return (
     <NavigationContainer>
+      <MyComponent setActiveScreen={setActiveScreen} />
       <Provider store={store}>
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
@@ -21,7 +38,9 @@ const App = () => {
         </Stack.Navigator>
       </Provider>
 
-      <BottomTab />
+      {activeScreen !== "OnBoarding" && (
+        <BottomTab activeScreen={activeScreen}/>
+      ) }
     </NavigationContainer>
   )
 }
