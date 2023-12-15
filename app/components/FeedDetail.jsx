@@ -2,13 +2,21 @@ import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'rea
 import React from 'react'
 import tw from 'twrnc'
 import { AntDesign } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
 
 const FeedDetail = ({data}) => {
 
   const screenWidth = Math.round(Dimensions.get('window').width)
   const cardWidth = screenWidth/2 - 20
+
+  const navigation = useNavigation()
+  
+  const handleClick = () => {
+    navigation.navigate('Product', {_id : data._id})
+  }
+
   return (
-    <View style={[tw`p-2 m-2 rounded-xl bg-white flex items-center justify-center`,
+    <TouchableOpacity onPress={handleClick} style={[tw`p-2 m-2 rounded-xl bg-white flex items-center justify-center`,
     {width : cardWidth}]}>
       <Image
         source={{uri : data?.mainImage?.asset?.url}}
@@ -30,7 +38,7 @@ const FeedDetail = ({data}) => {
       </View>
       
 
-    </View>
+    </TouchableOpacity>
   )
 }
 
