@@ -69,22 +69,20 @@ Follow these steps to install SheenShopper:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/SheenShopper.git
+   git clone https://github.com/rohanudhwani/SheenShopper.git
    ```
 
 2. Navigate to the project directory:
    ```bash
    cd SheenShopper
+   cd App
    ```
 
-3. Install dependencies:
-   ```bash
-   yarn install
-   ```
+You must have npm, and metro setup
 
-4. Run the app:
+3. Run the app:
    ```bash
-   yarn start
+   npm start
    ```
 
    Follow the instructions to open the app on an emulator or scan the QR code using the Expo Go app on your mobile device.
