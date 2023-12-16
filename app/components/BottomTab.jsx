@@ -27,8 +27,8 @@ const BottomTab = ({activeScreen}) => {
             <MaterialIcons name="collections" size={32} color="#5C5576" />
         </TouchableOpacity>
 
-        <TouchableOpacity>
-            <MaterialIcons name="shopping-cart" size={32} color="#5C5576" />
+        <TouchableOpacity onPress={() => navigation.navigate("CartScreen")}>
+            <MaterialIcons name="shopping-cart" size={32} color={activeScreen === "CartScreen" ? "#fff" : "#5C5576"} />
         </TouchableOpacity>
       </View>
     </View>

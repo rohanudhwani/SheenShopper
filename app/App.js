@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { NavigationContainer, useNavigation } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import {HomeScreen, OnBoardingScreen, ProductScreen} from './screens'
+import {CartScreen, HomeScreen, OnBoardingScreen, ProductScreen} from './screens'
 
 import { Provider, connect } from 'react-redux'
 import store from './context/store'
@@ -35,6 +35,7 @@ const App = () => {
           <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Product" component={ProductScreen} />
+          <Stack.Screen name="CartScreen" component={CartScreen} />
         </Stack.Navigator>
       </Provider>
 

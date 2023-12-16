@@ -58,7 +58,7 @@ const ProductScreen = ({route}) => {
                             <Entypo name="chevron-left" size={32} color={"#555"} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("CartScreen")}>
                             <MaterialIcons name="shopping-cart" size={32} color={"#555"} />
                         </TouchableOpacity>
                     </View>
@@ -128,7 +128,7 @@ const ProductScreen = ({route}) => {
                             </TouchableOpacity>) : (
                             <TouchableOpacity onPress={handlePressCart} style={tw`bg-black px-4 py-2 rounded-xl`}>
                                 <Text style={tw`text-base font-semibold text-gray-50`}>
-                                    Cart
+                                    Add to Cart
                                 </Text>
                             </TouchableOpacity>)
                         }
