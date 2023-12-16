@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "app",
+    "name": "SheenShopper",
     "slug": "app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/favicon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/brand.png",
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.rohanudhwani.app"
+      "package": "com.rohanudhwani.sheenshopper"
     },
     "web": {
       "favicon": "./assets/icon.png"
