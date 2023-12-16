@@ -1,20 +1,39 @@
-import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { FlatList, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import tw from 'twrnc'
 import { Entypo, FontAwesome5 } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { EmptyCart } from '../assets'
+
+import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { removeFromCart } from '../context/actions/cartActions'
+
+import { ScrollView } from 'react-native-virtualized-view'
 
 const CartScreen = () => {
 
     const navigation = useNavigation()
+
+    const [total, setTotal] = useState(0)
     
     const cartItems = useSelector((state) => state.cartItems.cart)
+
+    useEffect(() => {
+        let mainTotal=0
+        if(cartItems?.length > 0){
+            cartItems.map((item) => {
+                mainTotal += item.data.price * item.qty
+                setTotal(mainTotal)
+            })
+        }
+    }, [cartItems])
 
 
   return (
     <SafeAreaView style={tw`flex-1 w-full items-start justify-start bg-[#EBEAEF] py-7`}>
+    
         <View style={tw`flex-row items-center justify-between w-full px-4 py-2`}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
                 <Entypo name="chevron-left" size={32} color={"#555"} />
@@ -35,7 +54,7 @@ const CartScreen = () => {
                 <Image source={EmptyCart} style={tw`w-64 h-64`} resizeMode='contain' />
             </View>
         
-        ) : (
+        ) : (<GestureHandlerRootView style={tw`flex-1 w-full items-start justify-start bg-[#EBEAEF] py-7`}>
             <ScrollView style={tw`w-full flex-1`}>
                 <View style={tw`py-4 flex`}>
                     <FlatList
@@ -48,17 +67,97 @@ const CartScreen = () => {
 
                 {/* Promocode */}
 
-                
+                <View style={tw`w-full p-8`}>
+                    <View style={tw`w-full px-2 h-16 rounded-xl bg-white flex-row items-center justify-between`}>
+                        <TextInput placeholder='Promo Code' style={tw`text-base px-4 font-semibold text-[#555] flex-1 py-1`} />
+                        <TouchableOpacity style={tw`bg-black px-3 py-2 rounded-xl flex items-center justify-center`}>
+                            <Text style={tw`text-white text-lg`}>Apply</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                {/* Total Calculation */}
 
 
+                <View style={tw`px-8 w-full flex py-2`}>
+                    <View style={tw`flex-row items-center justify-between`}>
+                        <Text style={tw`text-lg font-semibold text-[#555]`}>Subtotal</Text>
+                        <View style={tw`flex-row items-center justify-center`}>
+                            <Text style={tw`text-xl font-semibold text-black`}>${parseFloat(total).toFixed(2)}</Text>
+                            <Text style={tw`text-sm text-gray-500 ml-2 py-1`}>USD</Text>
+                        </View>
+                    </View>
+
+                    <View style={tw` w-full h-[2px] bg-white`}>
+
+                    </View>
+
+                </View>
+
+                <View style={tw`px-8 w-full flex py-2`}>
+                    <View style={tw`flex-row items-center justify-between`}>
+                        <Text style={tw`text-lg font-semibold text-[#555]`}>Shipping Cost</Text>
+                        <View style={tw`flex-row items-center justify-center`}>
+                            <Text style={tw`text-xl font-semibold text-black`}>$5.0</Text>
+                            <Text style={tw`text-sm text-gray-500 ml-2 py-1`}>USD</Text>
+                        </View>
+                    </View>
+
+                    <View style={tw` w-full h-[2px] bg-white`}>
+
+                    </View>
+
+                </View>
+
+                <View style={tw`px-8 w-full flex py-2`}>
+                    <View style={tw`flex-row items-center justify-between`}>
+                        <Text style={tw`text-xl font-bold text-[#666]`}>Grand Total</Text>
+                        <View style={tw`flex-row items-center justify-center`}>
+                            <Text style={tw`text-sm text-gray-500 ml-2 py-1 mr-4`}>({cartItems?.length}) items</Text>
+                            <Text style={tw`text-xl font-semibold text-black`}>${parseFloat(total + 5.0).toFixed(2)}</Text>
+                            <Text style={tw`text-sm text-gray-500 ml-2 py-1`}>USD</Text>
+                        </View>
+                    </View>
+
+                </View>
+
+                <View style={tw`w-full px-8 my-4`}>
+                    <TouchableOpacity style={tw`bg-black p-2 w-full rounded-xl flex items-center justify-center`}>
+                        <Text style={tw`text-white text-lg font-semibold`}>Proceed to Checkout</Text>
+                    </TouchableOpacity>
+                </View>
+
+            
             </ScrollView>
+        </GestureHandlerRootView>
         )}
+        
     </SafeAreaView>
   )
 }
 
-export const CartItemCard = ({item, qty}) => {
+const rightSwipeActions = () => {
     return (
+      <View style={tw`h-full w-24 flex items-center justify-center bg-white`}>
+        <TouchableOpacity>
+          <FontAwesome5 name="trash" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+export const CartItemCard = ({item, qty}) => {
+    
+    const dispatch = useDispatch();
+
+    const swipeFromRightOpen = (_id) => {
+        dispatch(removeFromCart(_id));
+    };
+    return (
+        <Swipeable
+      renderRightActions={rightSwipeActions}
+      onSwipeableRightOpen={() => swipeFromRightOpen(item._id)}
+    >
         <View style={tw`flex-row px-6 w-full items-center my-1`}>
             <View style={tw`bg-white rounded-xl flex p-2 w-16 h-16 items-center justify-center relative`}>
                 <Image source={{uri : item?.bgImage?.asset?.url}} resizeMode='cover' style={tw`w-full h-full opacity-30`} />
@@ -92,6 +191,7 @@ export const CartItemCard = ({item, qty}) => {
                     <Text style={tw`text-base font-bold text-black`}>(Qty : {qty})</Text>
                 </View>
         </View>
+        </Swipeable>
     )
 }
 export default CartScreen

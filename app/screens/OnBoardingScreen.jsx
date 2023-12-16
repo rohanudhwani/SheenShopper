@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 
 const OnBoardingScreen = () => {
 
-  const navigation =useNavigation();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const checkOnBoardingStatus = async () => { 
@@ -69,7 +69,7 @@ const OnBoardingScreen = () => {
 
   const handleOnBoardingComplete = async (e) => {
     console.log('OnBoarding Complete', e)
-    if( e ===2 ){
+    if( e === 2 ){
       try{
         await AsyncStorage.setItem('@onBoarding_Complete', 'true');
         navigation.navigate("Home");

@@ -57,23 +57,25 @@ const HomeScreen = () => {
         <Image source={Screen3} style={tw`w-12 h-12 rounded-xl`} resizeMode='cover'/>
       </View>
 
-      <View style={tw`flex-row items-center justify-between px-7 py-2 w-full mr-6`}>
-        <View style={tw`px-4 py-2 bg-white rounded-xl flex-row items-center justify-center mr-2 w-73`}>
-          <MaterialIcons name="search" size={24} color="#7f7f7f" />
-          <TextInput
-            style={tw`text-lg font-semibold flex-1 px-2 py-1 -mt-1`}
-            placeholderTextColor="#555"
-            placeholder='Search Here...'
-            value={searchTerm}
-            onChangeText={handleSearchTerm}/>
+      <View style={tw`flex-row items-center justify-between px-4 py-2 w-full`}>
+        <View style={tw`flex-row items-center mr-12`}>
+          <View style={tw`px-4 py-2 bg-white rounded-xl flex-row items-center justify-center mr-2`}>
+            <MaterialIcons name="search" size={24} color="#7f7f7f" />
+            <TextInput
+              style={tw`text-lg font-semibold flex-1 px-2 py-1`}
+              placeholderTextColor="#555"
+              placeholder='Search Here...'
+              value={searchTerm}
+              onChangeText={handleSearchTerm}
+            />
+          </View>
         </View>
 
-        <TouchableOpacity style={tw`w-12 h-12 rounded-xl flex items-center justify-center bg-white`}>
+        <TouchableOpacity style={tw`w-12 h-12 right-11 rounded-xl flex items-center justify-center bg-white`}>
           <FontAwesome name="filter" size={24} color="#7f7f7f"/>
-
         </TouchableOpacity>
-
       </View>
+
 
 
       {/* Scrollable container start */}
