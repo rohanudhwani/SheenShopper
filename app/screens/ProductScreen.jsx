@@ -107,7 +107,7 @@ const ProductScreen = ({route}) => {
 
                     {/* Bottom Section */}
                     <View style={tw`flex-row items-center justify-between w-full top-1 `}>
-                        <Text style={tw`text-lg font-bold text-center text-black`}>$ {data?.price}</Text>
+                        <Text style={tw`text-lg font-bold text-center text-black`}>₹ {data?.price}</Text>
 
                         <View style={tw`flex-row items-center justify-center rounded-xl border border-gray-200 px-6 py-1`}>
                             <TouchableOpacity onPress={() => handleQty(-1)} style={tw`right-4`}>

@@ -68,7 +68,7 @@ const OnBoardingScreen = () => {
   }, [])
 
   const handleOnBoardingComplete = async (e) => {
-    console.log('OnBoarding Complete', e)
+    // console.log('OnBoarding Complete', e)
     if( e === 2 ){
       try{
         await AsyncStorage.setItem('@onBoarding_Complete', 'true');

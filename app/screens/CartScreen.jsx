@@ -83,7 +83,7 @@ const CartScreen = () => {
                     <View style={tw`flex-row items-center justify-between`}>
                         <Text style={tw`text-lg font-semibold text-[#555]`}>Subtotal</Text>
                         <View style={tw`flex-row items-center justify-center`}>
-                            <Text style={tw`text-xl font-semibold text-black`}>${parseFloat(total).toFixed(2)}</Text>
+                            <Text style={tw`text-xl font-semibold text-black`}>₹{parseFloat(total).toFixed(2)}</Text>
                             <Text style={tw`text-sm text-gray-500 ml-2 py-1`}>USD</Text>
                         </View>
                     </View>
@@ -98,7 +98,7 @@ const CartScreen = () => {
                     <View style={tw`flex-row items-center justify-between`}>
                         <Text style={tw`text-lg font-semibold text-[#555]`}>Shipping Cost</Text>
                         <View style={tw`flex-row items-center justify-center`}>
-                            <Text style={tw`text-xl font-semibold text-black`}>$5.0</Text>
+                            <Text style={tw`text-xl font-semibold text-black`}>₹5.0</Text>
                             <Text style={tw`text-sm text-gray-500 ml-2 py-1`}>USD</Text>
                         </View>
                     </View>
@@ -114,7 +114,7 @@ const CartScreen = () => {
                         <Text style={tw`text-xl font-bold text-[#666]`}>Grand Total</Text>
                         <View style={tw`flex-row items-center justify-center`}>
                             <Text style={tw`text-sm text-gray-500 ml-2 py-1 mr-4`}>({cartItems?.length}) items</Text>
-                            <Text style={tw`text-xl font-semibold text-black`}>${parseFloat(total + 5.0).toFixed(2)}</Text>
+                            <Text style={tw`text-xl font-semibold text-black`}>₹{parseFloat(total + 5.0).toFixed(2)}</Text>
                             <Text style={tw`text-sm text-gray-500 ml-2 py-1`}>USD</Text>
                         </View>
                     </View>
@@ -174,12 +174,12 @@ export const CartItemCard = ({item, qty}) => {
                     <Text style={tw`w-50 text-sm text-[#555]`}>{item?.title}</Text>
                     <Text style={tw`w-50 text-xs text-[#777]`}>{item?.shortDscription?.substring(0, 20)}...</Text>
                     {/* <View style={tw`flex-row items-center justify-center`}>
-                        <Text>$ {item?.price * qty}</Text>
+                        <Text>₹ {item?.price * qty}</Text>
                         <Text style={tw`left-3`}>(Qty : {qty})</Text>
                     </View> */}
 
                     <Text style={tw`text-lg font-bold text-black`}>
-                        $ {item?.price * qty}
+                        ₹ {parseFloat(item?.price * qty).toFixed(2)}
                     </Text>
                     
                 </View>

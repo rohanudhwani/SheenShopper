@@ -31,7 +31,7 @@ const FeedDetail = ({data}) => {
       </View>
 
       <View style={tw`flex-row items-center justify-between w-full`}>
-        <Text style={tw`text-sm font-semibold text-center text-gray-500`}>$ {data?.price}</Text>
+        <Text style={tw`text-sm font-semibold text-center text-gray-500`}>₹ {data?.price}</Text>
         <TouchableOpacity style={tw`bg-black w-8 h-8 rounded-full flex items-center justify-center`}>
           <AntDesign name="heart" size={16} color="#fbfbfb" />
         </TouchableOpacity>
